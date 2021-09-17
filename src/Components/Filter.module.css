@@ -19,6 +19,19 @@
   box-shadow: 4px 9px 17px -3px rgba(0, 0, 0, 0.24);
 }
 
+.filter button {
+  width: 90px;
+  height: 45px;
+  padding: 16px;
+  background: #fff;
+  border: none;
+  border-radius: 10px;
+  -webkit-box-shadow: 4px 9px 17px -3px rgba(0, 0, 0, 0.24);
+  box-shadow: 4px 9px 17px -3px rgba(0, 0, 0, 0.24);
+  outline: none;
+  cursor: pointer;
+}
+
 .filter select {
   width: 160px;
   height: 45px;

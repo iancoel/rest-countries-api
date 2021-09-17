@@ -25,7 +25,7 @@ const Filter = () => {
   }
 
   //Button function
-  function handleButtonClick() {
+  function handleButtonClick({ target }) {
     global.setPreferencesRegion(null);
     global.setPreferencesName(null);
     settextAreaData('');

@@ -27,8 +27,18 @@ const HomePage = () => {
   React.useEffect(() => {
     if (global.preferencesRegion) {
       preferencesFetch(`${url}region/${global.preferencesRegion}`);
+    } else {
+      preferencesFetch(`${url}all`);
     }
   }, [global.preferencesRegion]);
+
+  React.useEffect(() => {
+    if (global.preferencesName) {
+      preferencesFetch(`${url}name/${global.preferencesName}`);
+    } else {
+      preferencesFetch(`${url}all`);
+    }
+  }, [global.preferencesName]);
 
   // Return
   if (data) {
@@ -49,6 +59,8 @@ const HomePage = () => {
         })}
       </main>
     );
+  } else {
+    return <p>{error}</p>;
   }
   return null;
 };
