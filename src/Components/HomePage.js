@@ -1,29 +1,40 @@
 import React from 'react';
 import CountryCard from './CountryCard';
 import styles from './HomePage.module.css';
+import { GlobalContext } from './GlobalContext';
 
 const HomePage = () => {
+  const url = 'https://restcountries.eu/rest/v2/';
   const [data, setData] = React.useState(null);
   const [error, setError] = React.useState(null);
+  const global = React.useContext(GlobalContext);
+
+  async function preferencesFetch(url) {
+    try {
+      const response = await fetch(url);
+      const json = await response.json();
+      setData(json);
+      setError(null);
+    } catch {
+      setError('Something went wrong');
+    }
+  }
 
   React.useEffect(() => {
-    async function firstFetch(url) {
-      try {
-        const response = await fetch(url);
-        const json = await response.json();
-        setData(json);
-      } catch {
-        setError('Something went wrong');
-      }
-    }
-
-    firstFetch('https://restcountries.eu/rest/v2/all');
+    preferencesFetch(`${url}all`);
   }, []);
 
-  return (
-    <main>
-      {data &&
-        data.map((country) => {
+  React.useEffect(() => {
+    if (global.preferencesRegion) {
+      preferencesFetch(`${url}region/${global.preferencesRegion}`);
+    }
+  }, [global.preferencesRegion]);
+
+  // Return
+  if (data) {
+    return (
+      <main className={styles.main}>
+        {data.map((country) => {
           return (
             <div key={country.name}>
               <CountryCard
@@ -36,8 +47,10 @@ const HomePage = () => {
             </div>
           );
         })}
-    </main>
-  );
+      </main>
+    );
+  }
+  return null;
 };
 
 export default HomePage;

@@ -2,6 +2,7 @@ import React from 'react';
 import HomePage from './Components/HomePage';
 import Header from './Components/Header';
 import Filter from './Components/Filter';
+import { GlobalStorage } from './Components/GlobalContext';
 import './App.css';
 
 const App = () => {
@@ -9,8 +10,10 @@ const App = () => {
     <>
       <Header />
       <div className="container">
-        <Filter />
-        <HomePage />
+        <GlobalStorage>
+          <Filter />
+          <HomePage />
+        </GlobalStorage>
       </div>
     </>
   );

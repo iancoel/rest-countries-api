@@ -1,5 +1,6 @@
 import React from 'react';
 import styles from './Filter.module.css';
+import { GlobalContext } from './GlobalContext';
 
 const Filter = () => {
   const [textAreaData, settextAreaData] = React.useState(
@@ -7,18 +8,38 @@ const Filter = () => {
   );
   const [selectData, setSelectData] = React.useState('');
 
+  const global = React.useContext(GlobalContext);
+
+  //Textarea functions
   function handleClick() {
     if (textAreaData === 'Search for a country...') {
       settextAreaData('');
     }
   }
 
-  function handleChange({ target }) {
+  function handleChangeTextArea({ target }) {
     settextAreaData(target.value);
+    setSelectData('');
+    global.setPreferencesName(target.value);
+    global.setPreferencesRegion(null);
   }
 
-  function handleBlur() {
+  //Button function
+  function handleButtonClick() {
+    global.setPreferencesRegion(null);
+    global.setPreferencesName(null);
+    settextAreaData('');
+    setSelectData('');
+    global.setPreferencesRegion(null);
+    global.setPreferencesName(null);
+  }
+
+  //Select functions
+  function handleChangeSelect({ target }) {
     settextAreaData('Search for a country...');
+    setSelectData(target.value);
+    global.setPreferencesRegion(target.value);
+    global.setPreferencesName(null);
   }
 
   return (
@@ -27,19 +48,17 @@ const Filter = () => {
         value={textAreaData}
         type="text"
         onClick={handleClick}
-        onChange={handleChange}
-        onBlur={handleBlur}
+        onChange={handleChangeTextArea}
       />
 
-      <select
-        value={selectData}
-        onChange={({ target }) => setSelectData(target.value)}
-      >
+      <button onClick={handleButtonClick}>All</button>
+
+      <select value={selectData} onChange={handleChangeSelect}>
         <option value="" disabled>
           Filter by Region
         </option>
         <option value="africa">Africa</option>
-        <option value="america">America</option>
+        <option value="americas">Americas</option>
         <option value="asia">Asia</option>
         <option value="europe">Europe</option>
         <option value="oceania">Oceania</option>
