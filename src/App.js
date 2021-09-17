@@ -1,12 +1,16 @@
 import React from 'react';
 import HomePage from './Components/HomePage';
+import Header from './Components/Header';
 import './App.css';
 
 const App = () => {
   return (
-    <div className="container">
-      <HomePage />
-    </div>
+    <>
+      <Header />
+      <div className="container">
+        <HomePage />
+      </div>
+    </>
   );
 };
 
