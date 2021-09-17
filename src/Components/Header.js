@@ -4,7 +4,7 @@ import styles from './Header.module.css';
 const Header = () => {
   const headerWrapper = React.useRef();
 
-  // Opacity to header
+  // Applying opacity to header
   React.useEffect(() => {
     window.addEventListener('scroll', handleScroll);
     function handleScroll(event) {
