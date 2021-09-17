@@ -15,7 +15,7 @@ const CountryCard = ({ imgSrc, name, population, region, capital }) => {
           <b>Population:</b> {population}
         </span>
         <span>
-          <b>Region:</b> {region}
+          <b>Continent:</b> {region}
         </span>
         <span>
           <b>Capital: </b>
