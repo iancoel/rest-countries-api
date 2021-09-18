@@ -1,21 +1,38 @@
 import React from 'react';
 import styles from './CountryPage.module.css';
 import { useParams } from 'react-router';
+import { Link } from 'react-router-dom';
 
 const CountryPage = () => {
   const [error, setError] = React.useState(null);
   const [data, setData] = React.useState(null);
+  const [borderData, setBorderData] = React.useState([]);
+  const [borderFlag, setBorderFlag] = React.useState([]);
   const params = useParams();
   const url = `https://restcountries.eu/rest/v2/name/${params.name}`;
+  const borderUrl = 'https://restcountries.eu/rest/v2/alpha/';
 
   async function nameFetch(url) {
     try {
       const response = await fetch(url);
       const json = await response.json();
       setData(json[0]);
+      setBorderData(json[0].borders);
       setError(null);
     } catch {
-      setError('A mistake was made ): ');
+      setError('Error at nameFetch');
+    }
+  }
+
+  async function bordersFetch(border) {
+    try {
+      const response = await fetch(`${borderUrl}${border}`);
+      const json = await response.json();
+      const flag = await json.flag;
+      setBorderFlag((prev) => [...prev, flag]);
+      setError(null);
+    } catch {
+      setError('Error at bordersFetch');
     }
   }
 
@@ -23,17 +40,38 @@ const CountryPage = () => {
     nameFetch(url);
   }, []);
 
+  React.useEffect(() => {
+    if (data) {
+      borderData.forEach((border) => bordersFetch(border));
+    }
+  }, [borderData, data]);
+
   if (data) {
     const backgroundFlag = {
       background: `url(${data.flag})`,
       backgroundSize: 'contain',
       backgroundRepeat: 'no-repeat',
     };
-    console.log(data.flag);
     return (
       <div className={`${styles.country} ${styles.container}`}>
         <div>
           <div style={backgroundFlag} className={styles.flag}></div>
+          <ul className={styles.borders}>
+            {console.log(borderFlag)}
+            {borderFlag.map((flag) => (
+              <Link
+                key={flag}
+                to={`country/${flag
+                  .replace('https://restcountries.eu/data/', '')
+                  .slice(0, 3)}`}
+                exact
+                style={{
+                  background: `url(${flag})`,
+                  backgroundSize: '100% 100%',
+                }}
+              ></Link>
+            ))}
+          </ul>
         </div>
         <ul className={styles.info}>
           <li>
@@ -99,7 +137,7 @@ const CountryPage = () => {
             <span>Currencies: </span>
             <ul className={styles.innerList}>
               {data.currencies.map((item) => (
-                <li>{item.name}</li>
+                <li key={item.name}>{item.name}</li>
               ))}
             </ul>
           </li>
@@ -107,13 +145,15 @@ const CountryPage = () => {
             <span>Languagues: </span>
             <ul className={styles.innerList}>
               {data.languages.map((item) => (
-                <li>{item.name}</li>
+                <li key={item.name}>{item.name}</li>
               ))}
             </ul>
           </li>
         </ul>
       </div>
     );
+  } else if (error) {
+    return <p>{error}</p>;
   } else {
     return null;
   }
