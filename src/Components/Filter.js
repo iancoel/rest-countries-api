@@ -24,6 +24,12 @@ const Filter = () => {
     global.setPreferencesRegion(null);
   }
 
+  function handleBlur() {
+    if (textAreaData === '') {
+      settextAreaData('Search for a country...');
+    }
+  }
+
   //Button function
   function handleButtonClick({ target }) {
     global.setPreferencesRegion(null);
@@ -49,6 +55,7 @@ const Filter = () => {
         type="text"
         onClick={handleClick}
         onChange={handleChangeTextArea}
+        onBlur={handleBlur}
       />
 
       <button onClick={handleButtonClick}>All</button>

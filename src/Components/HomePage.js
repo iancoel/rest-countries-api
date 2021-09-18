@@ -2,6 +2,7 @@ import React from 'react';
 import CountryCard from './CountryCard';
 import styles from './HomePage.module.css';
 import { GlobalContext } from './GlobalContext';
+import Loading from './Loading';
 
 const HomePage = () => {
   const url = 'https://restcountries.eu/rest/v2/';
@@ -11,15 +12,21 @@ const HomePage = () => {
   const global = React.useContext(GlobalContext);
 
   async function preferencesFetch(url) {
+    let response;
     try {
       setLoading(true);
-      const response = await fetch(url);
+      setData(null);
+      response = await fetch(url);
+      console.log(response.status);
       const json = await response.json();
       setData(json);
       setError(null);
     } catch {
       setError('Something went wrong');
     } finally {
+      if (response.status === 404) {
+        setError('Could not find any countries ):');
+      }
       setLoading(false);
     }
   }
@@ -46,23 +53,21 @@ const HomePage = () => {
 
   // Return
   if (loading) {
-    return (
-      <div className={styles.loadingWrapper}>
-        <div className={styles.loading}></div>
-      </div>
-    );
-  } else if (data) {
+    return <Loading />;
+  } else if (error) {
+    return <p>{error}</p>;
+  } else if (data && !error) {
     return (
       <main className={styles.main}>
-        {data.map((country) => {
+        {data.map(({ name, flag, population, capital, region }) => {
           return (
-            <div key={country.name}>
+            <div key={name}>
               <CountryCard
-                imgSrc={country.flag}
-                name={country.name}
-                population={country.population}
-                region={country.capital}
-                capital={country.capital}
+                imgSrc={flag}
+                name={name}
+                population={population}
+                region={region}
+                capital={capital}
               />
             </div>
           );
@@ -70,7 +75,7 @@ const HomePage = () => {
       </main>
     );
   } else {
-    return <p>{error}</p>;
+    return null;
   }
 };
 
