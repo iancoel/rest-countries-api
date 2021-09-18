@@ -1,4 +1,5 @@
 import React from 'react';
+import { Link } from 'react-router-dom';
 import styles from './CountryCard.module.css';
 
 const CountryCard = ({ imgSrc, name, population, region, capital }) => {
@@ -7,7 +8,7 @@ const CountryCard = ({ imgSrc, name, population, region, capital }) => {
   };
 
   return (
-    <div className={styles.card}>
+    <Link to={'country/' + name} className={styles.card}>
       <div style={flag} className={styles.flag}></div>
       <div className={styles.info}>
         <h3>{name}</h3>
@@ -22,7 +23,7 @@ const CountryCard = ({ imgSrc, name, population, region, capital }) => {
           {capital}
         </span>
       </div>
-    </div>
+    </Link>
   );
 };
 

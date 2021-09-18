@@ -1,4 +1,5 @@
 import React from 'react';
+import { Link } from 'react-router-dom';
 import styles from './Filter.module.css';
 import { GlobalContext } from './GlobalContext';
 
@@ -34,7 +35,7 @@ const Filter = () => {
   function handleButtonClick({ target }) {
     global.setPreferencesRegion(null);
     global.setPreferencesName(null);
-    settextAreaData('');
+    settextAreaData('Search for a country...');
     setSelectData('');
     global.setPreferencesRegion(null);
     global.setPreferencesName(null);
@@ -58,7 +59,9 @@ const Filter = () => {
         onBlur={handleBlur}
       />
 
-      <button onClick={handleButtonClick}>All</button>
+      <Link to="/" className={styles.button} onClick={handleButtonClick}>
+        All
+      </Link>
 
       <select value={selectData} onChange={handleChangeSelect}>
         <option value="" disabled>
