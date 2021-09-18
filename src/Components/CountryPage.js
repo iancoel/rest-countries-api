@@ -1,26 +1,41 @@
 import React from 'react';
 import styles from './CountryPage.module.css';
+import Loading from './Loading';
 import { useParams } from 'react-router';
 import { Link } from 'react-router-dom';
 
 const CountryPage = () => {
   const [error, setError] = React.useState(null);
   const [data, setData] = React.useState(null);
+  const [loading, setLoading] = React.useState(false);
   const [borderData, setBorderData] = React.useState([]);
   const [borderFlag, setBorderFlag] = React.useState([]);
   const params = useParams();
-  const url = `https://restcountries.eu/rest/v2/name/${params.name}`;
+  const urlName =
+    params.name.length > 3
+      ? `https://restcountries.eu/rest/v2/name/${params.name}`
+      : `https://restcountries.eu/rest/v2/alpha/${params.name}`;
   const borderUrl = 'https://restcountries.eu/rest/v2/alpha/';
 
-  async function nameFetch(url) {
+  async function nameFetch(urlName) {
     try {
-      const response = await fetch(url);
+      setLoading(true);
+      const response = await fetch(urlName);
       const json = await response.json();
-      setData(json[0]);
-      setBorderData(json[0].borders);
+      console.log(json[0]);
+      if (json[0]) {
+        setData(json[0]);
+        setBorderData(json[0].borders);
+      } else {
+        setData(json);
+        setBorderData(json.borders);
+      }
+
       setError(null);
     } catch {
       setError('Error at nameFetch');
+    } finally {
+      setLoading(false);
     }
   }
 
@@ -37,8 +52,8 @@ const CountryPage = () => {
   }
 
   React.useEffect(() => {
-    nameFetch(url);
-  }, []);
+    nameFetch(urlName);
+  }, [params]);
 
   React.useEffect(() => {
     if (data) {
@@ -57,11 +72,10 @@ const CountryPage = () => {
         <div>
           <div style={backgroundFlag} className={styles.flag}></div>
           <ul className={styles.borders}>
-            {console.log(borderFlag)}
             {borderFlag.map((flag) => (
               <Link
                 key={flag}
-                to={`country/${flag
+                to={`/country/${flag
                   .replace('https://restcountries.eu/data/', '')
                   .slice(0, 3)}`}
                 exact
@@ -152,6 +166,8 @@ const CountryPage = () => {
         </ul>
       </div>
     );
+  } else if (loading) {
+    return <Loading />;
   } else if (error) {
     return <p>{error}</p>;
   } else {
