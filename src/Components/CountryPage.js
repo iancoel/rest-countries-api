@@ -14,7 +14,7 @@ const CountryPage = () => {
       console.log(json);
       setError(null);
     } catch {
-      setError('A mistake was made ):');
+      setError('A mistake was made ): ');
     }
   }
 
