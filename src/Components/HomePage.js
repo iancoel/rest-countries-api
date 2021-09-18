@@ -6,17 +6,21 @@ import { GlobalContext } from './GlobalContext';
 const HomePage = () => {
   const url = 'https://restcountries.eu/rest/v2/';
   const [data, setData] = React.useState(null);
+  const [loading, setLoading] = React.useState(false);
   const [error, setError] = React.useState(null);
   const global = React.useContext(GlobalContext);
 
   async function preferencesFetch(url) {
     try {
+      setLoading(true);
       const response = await fetch(url);
       const json = await response.json();
       setData(json);
       setError(null);
     } catch {
       setError('Something went wrong');
+    } finally {
+      setLoading(false);
     }
   }
 
@@ -41,7 +45,13 @@ const HomePage = () => {
   }, [global.preferencesName]);
 
   // Return
-  if (data) {
+  if (loading) {
+    return (
+      <div className={styles.loadingWrapper}>
+        <div className={styles.loading}></div>
+      </div>
+    );
+  } else if (data) {
     return (
       <main className={styles.main}>
         {data.map((country) => {
@@ -62,7 +72,6 @@ const HomePage = () => {
   } else {
     return <p>{error}</p>;
   }
-  return null;
 };
 
 export default HomePage;
