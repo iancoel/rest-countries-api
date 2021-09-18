@@ -1,8 +1,9 @@
 import React from 'react';
 import CountryCard from './CountryCard';
 import styles from './HomePage.module.css';
-import { GlobalContext } from './GlobalContext';
 import Loading from './Loading';
+import Error404 from './Error404';
+import { GlobalContext } from './GlobalContext';
 
 const HomePage = () => {
   const url = 'https://restcountries.eu/rest/v2/';
@@ -15,18 +16,18 @@ const HomePage = () => {
     let response;
     try {
       setLoading(true);
-      setData(null);
       response = await fetch(url);
-      console.log(response.status);
       const json = await response.json();
-      setData(json);
-      setError(null);
+      if (response.status === 200) {
+        setData(json);
+        setError(null);
+      } else {
+        setError('Could not find any countries ):');
+        setData(null);
+      }
     } catch {
       setError('Something went wrong');
     } finally {
-      if (response.status === 404) {
-        setError('Could not find any countries ):');
-      }
       setLoading(false);
     }
   }
@@ -55,7 +56,7 @@ const HomePage = () => {
   if (loading) {
     return <Loading />;
   } else if (error) {
-    return <p>{error}</p>;
+    return <Error404 />;
   } else if (data && !error) {
     return (
       <main className={styles.main}>
