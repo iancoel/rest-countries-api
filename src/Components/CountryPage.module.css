@@ -1,0 +1,61 @@
+.container {
+  width: 90vw !important;
+  margin: 60px auto !important;
+}
+
+li {
+  display: inline-block;
+  font-size: 1.25rem;
+  font-family: Verdana, Geneva, Tahoma, sans-serif;
+}
+
+ul > li {
+  margin-bottom: 1rem;
+}
+
+li > span {
+  color: #333;
+  font-weight: bold;
+  font-size: 1.25rem;
+}
+
+.country {
+  width: 100%;
+  display: flex;
+  justify-content: space-between;
+}
+
+.flag {
+  width: 500px;
+  height: 400px;
+}
+
+.info {
+  width: 600px;
+  display: flex;
+  flex-direction: column;
+}
+
+.innerList {
+  display: flex;
+  flex-direction: column;
+}
+
+.innerList li:first-child {
+  margin-top: 10px;
+}
+
+.innerList li {
+  margin-left: 30px;
+}
+
+.innerList li::before {
+  display: inline-block;
+  content: '';
+  width: 10px;
+  height: 3px;
+  background: #ddd;
+  margin-bottom: 7px;
+  margin-right: 10px;
+  border-radius: 2px;
+}
