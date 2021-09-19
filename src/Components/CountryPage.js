@@ -11,18 +11,17 @@ const CountryPage = () => {
   const [borderData, setBorderData] = React.useState([]);
   const [borderFlag, setBorderFlag] = React.useState([]);
   const params = useParams();
+  const borderUrl = 'https://restcountries.eu/rest/v2/alpha/';
   const urlName =
     params.name.length > 3
       ? `https://restcountries.eu/rest/v2/name/${params.name}`
-      : `https://restcountries.eu/rest/v2/alpha/${params.name}`;
-  const borderUrl = 'https://restcountries.eu/rest/v2/alpha/';
+      : `${borderUrl}${params.name}`;
 
   async function nameFetch(urlName) {
     try {
       setLoading(true);
       const response = await fetch(urlName);
       const json = await response.json();
-      console.log(json[0]);
       if (json[0]) {
         setData(json[0]);
         setBorderData(json[0].borders);
@@ -30,7 +29,6 @@ const CountryPage = () => {
         setData(json);
         setBorderData(json.borders);
       }
-
       setError(null);
     } catch {
       setError('Error at nameFetch');
@@ -44,7 +42,13 @@ const CountryPage = () => {
       const response = await fetch(`${borderUrl}${border}`);
       const json = await response.json();
       const flag = await json.flag;
-      setBorderFlag((prev) => [...prev, flag]);
+      if (border.toLowerCase() === params.name) {
+      } else {
+        setBorderFlag((prev) =>
+          prev.includes(flag) ? [...prev] : [...prev, flag],
+        );
+      }
+
       setError(null);
     } catch {
       setError('Error at bordersFetch');
@@ -53,6 +57,7 @@ const CountryPage = () => {
 
   React.useEffect(() => {
     nameFetch(urlName);
+    setBorderFlag([]);
   }, [params]);
 
   React.useEffect(() => {
@@ -61,10 +66,10 @@ const CountryPage = () => {
     }
   }, [borderData, data]);
 
-  if (data) {
+  if (data && borderFlag) {
     const backgroundFlag = {
       background: `url(${data.flag})`,
-      backgroundSize: 'contain',
+      backgroundSize: '100% 100%',
       backgroundRepeat: 'no-repeat',
     };
     return (
@@ -78,7 +83,6 @@ const CountryPage = () => {
                 to={`/country/${flag
                   .replace('https://restcountries.eu/data/', '')
                   .slice(0, 3)}`}
-                exact
                 style={{
                   background: `url(${flag})`,
                   backgroundSize: '100% 100%',
