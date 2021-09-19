@@ -48,7 +48,6 @@ const CountryPage = () => {
           prev.includes(flag) ? [...prev] : [...prev, flag],
         );
       }
-
       setError(null);
     } catch {
       setError('Error at bordersFetch');
@@ -69,13 +68,12 @@ const CountryPage = () => {
   if (data && borderFlag) {
     const backgroundFlag = {
       background: `url(${data.flag})`,
-      backgroundSize: '100% 100%',
-      backgroundRepeat: 'no-repeat',
     };
     return (
       <div className={`${styles.country} ${styles.container}`}>
-        <div>
+        <div className={styles.countryInnerContainer}>
           <div style={backgroundFlag} className={styles.flag}></div>
+          <h2>Borders:</h2>
           <ul className={styles.borders}>
             {borderFlag.map((flag) => (
               <Link

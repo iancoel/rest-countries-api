@@ -1,5 +1,5 @@
 .container {
-  width: 90vw !important;
+  width: 82vw !important;
   margin: 60px auto !important;
 }
 
@@ -13,7 +13,8 @@ ul > li {
   margin-bottom: 1rem;
 }
 
-li > span {
+li > span,
+h2 {
   color: #333;
   font-weight: bold;
   font-size: 1.25rem;
@@ -25,15 +26,25 @@ li > span {
   justify-content: space-between;
 }
 
+.countryInnerContainer {
+  width: 40%;
+  min-width: 400px;
+}
+
+h2 {
+  display: inline-block;
+  margin-top: 40px !important;
+}
+
 .flag {
-  width: 500px;
+  width: 100%;
   height: 400px;
-  background-size: contain;
-  background-repeat: no-repeat;
+  background-size: 100% 100% !important;
+  background-repeat: no-repeat !important;
 }
 
 .borders {
-  margin: 0 auto;
+  margin: 30px auto;
   display: grid;
   grid-template-columns: repeat(4, 1fr);
   align-items: center;
@@ -46,12 +57,13 @@ li > span {
   width: 70px;
   height: 50px;
   margin-bottom: 40px;
+  justify-self: start;
   -webkit-box-shadow: 4px 9px 17px -3px rgba(0, 0, 0, 0.24);
   box-shadow: 4px 9px 17px -3px rgba(0, 0, 0, 0.24);
 }
 
 .info {
-  width: 600px;
+  width: 30%;
   display: flex;
   flex-direction: column;
 }
@@ -74,7 +86,7 @@ li > span {
   content: '';
   width: 10px;
   height: 3px;
-  background: #ddd;
+  background: #999;
   margin-bottom: 7px;
   margin-right: 10px;
   border-radius: 2px;

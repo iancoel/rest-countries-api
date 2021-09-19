@@ -1,9 +1,15 @@
 .filter {
-  width: 90vw;
-  padding: 120px 15px 0;
+  width: 82vw;
+  padding: 120px 0 0;
   margin: 0 auto;
   display: flex;
-  justify-content: space-between;
+  justify-content: flex-start;
+}
+
+.filter textarea,
+.filter .button,
+.filter select {
+  margin-right: 100px;
 }
 
 .filter textarea {
