@@ -3,6 +3,7 @@ import styles from './CountryPage.module.css';
 import Loading from './Loading';
 import { useParams } from 'react-router';
 import { Link } from 'react-router-dom';
+import '../App.css';
 
 const CountryPage = () => {
   const [error, setError] = React.useState(null);
@@ -71,7 +72,7 @@ const CountryPage = () => {
     };
     return (
       <div className={`${styles.country} ${styles.container}`}>
-        <div className={styles.countryInnerContainer}>
+        <div className={`${styles.countryInnerContainer} animeLeft`}>
           <div style={backgroundFlag} className={styles.flag}></div>
           <h2>Borders:</h2>
           <ul className={styles.borders}>
@@ -89,7 +90,7 @@ const CountryPage = () => {
             ))}
           </ul>
         </div>
-        <ul className={styles.info}>
+        <ul className={`${styles.info} animeLeft`}>
           <li>
             <span>Name:</span> {data.name}
           </li>

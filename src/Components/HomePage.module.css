@@ -5,4 +5,5 @@
   grid-template-columns: repeat(4, 1fr);
   justify-content: space-between;
   align-content: space-between;
+  justify-items: flex-start;
 }

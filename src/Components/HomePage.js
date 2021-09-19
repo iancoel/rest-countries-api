@@ -4,6 +4,7 @@ import styles from './HomePage.module.css';
 import Loading from './Loading';
 import Error404 from './Error404';
 import { GlobalContext } from './GlobalContext';
+import '../App.css';
 
 const HomePage = () => {
   const url = 'https://restcountries.eu/rest/v2/';
@@ -59,8 +60,8 @@ const HomePage = () => {
     return <Error404 />;
   } else if (data && !error) {
     return (
-      <main className={styles.main}>
-        {data.map(({ name, flag, population, capital, region }) => {
+      <main className={`${styles.main}`}>
+        {data.map(({ name, flag, population, capital, region }, index) => {
           return (
             <div key={name}>
               <CountryCard
@@ -69,6 +70,7 @@ const HomePage = () => {
                 population={population}
                 region={region}
                 capital={capital}
+                timeOut={index}
               />
             </div>
           );
