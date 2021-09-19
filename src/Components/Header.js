@@ -19,7 +19,11 @@ const Header = () => {
   return (
     <header ref={headerWrapper} className={`${styles.wrapper}`}>
       <div className={styles.container}>
-        <p>Rest Countries API</p>
+        <p>
+          Rest Countries API by Ian Coelho |{' '}
+          <a href="https://www.linkedin.com/in/ian-coel/">Linkedin</a> |
+          <a href="github.com/iancoel"> Github</a>
+        </p>
       </div>
     </header>
   );
