@@ -19,7 +19,7 @@ const App = () => {
             <Routes>
               <Route path="/" element={<HomePage />} />
               <Route path="country/:name/*" element={<CountryPage />} />
-              <Route path="teste" element={<Error404 />} />
+              <Route path="*" element={<Error404 />} />
             </Routes>
           </GlobalStorage>
         </div>

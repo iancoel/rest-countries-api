@@ -49,3 +49,18 @@
   box-shadow: 4px 9px 17px -3px rgba(0, 0, 0, 0.24);
   outline: none;
 }
+
+@media (max-width: 900px) {
+  .filter {
+    flex-direction: column;
+  }
+  .filter textarea,
+  .filter .button,
+  .filter select {
+    margin-right: 0;
+    margin-bottom: 20px;
+  }
+  .filter textarea {
+    width: 82vw;
+  }
+}

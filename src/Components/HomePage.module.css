@@ -7,3 +7,10 @@
   align-content: space-between;
   justify-items: flex-start;
 }
+
+@media (max-width: 900px) {
+  .main {
+    grid-template-columns: 1fr;
+    justify-items: center;
+  }
+}
