@@ -7,7 +7,7 @@ import { GlobalContext } from './GlobalContext';
 import '../App.css';
 
 const HomePage = () => {
-  const url = 'https://restcountries.eu/rest/v2/';
+  const url = 'https://restcountries.com/v3.1/';
   const [data, setData] = React.useState(null);
   const [loading, setLoading] = React.useState(false);
   const [error, setError] = React.useState(null);
@@ -63,7 +63,7 @@ const HomePage = () => {
       <main className={`${styles.main}`}>
         {data.map(({ name, flag, population, capital, region }, index) => {
           return (
-            <div key={name}>
+            <div key={index}>
               <CountryCard
                 imgSrc={flag}
                 name={name}

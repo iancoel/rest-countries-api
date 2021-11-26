@@ -10,15 +10,17 @@ const CountryCard = ({
   capital,
   timeOut,
 }) => {
-  const [anime, setAnime] = React.useState(false);
+  const [anime, setAnime] = React.useState(true);
+  //aqui em cima o inicial é false
 
   const flag = {
     background: `url(${imgSrc})`,
   };
 
-  setTimeout(() => {
-    setAnime(true);
-  }, 100 * timeOut);
+  // setTimeout(() => {
+  //   setAnime(true);
+  // }, 100 * timeOut);
+  // retirado para debugar
 
   if (anime)
     return (

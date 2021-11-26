@@ -12,10 +12,10 @@ const CountryPage = () => {
   const [borderData, setBorderData] = React.useState([]);
   const [borderFlag, setBorderFlag] = React.useState([]);
   const params = useParams();
-  const borderUrl = 'https://restcountries.eu/rest/v2/alpha/';
+  const borderUrl = 'https://restcountries.eu/rest/v3.1/alpha/';
   const urlName =
     params.name.length > 3
-      ? `https://restcountries.eu/rest/v2/name/${params.name}`
+      ? `https://restcountries.eu/rest/v3.1/name/${params.name}`
       : `${borderUrl}${params.name}`;
 
   async function nameFetch(urlName) {
